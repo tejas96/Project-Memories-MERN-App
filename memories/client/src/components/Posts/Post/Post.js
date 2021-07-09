@@ -4,9 +4,16 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
-
+import {useDispatch} from 'react-redux';
+import { setPostFormData } from '../../../core/redux/actions/form';
 const Post = (props) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const dispatchUpdatePostAction = (post) =>{
+        dispatch(setPostFormData(post));
+    }
+
     return (
         <Card className={classes.card}>
             <CardMedia className={classes.media} image={props.post.selectedFile} title={props.post.title} />
@@ -15,7 +22,7 @@ const Post = (props) => {
                 <Typography variant='body2'>{moment(props.post.createdAt).fromNow()}</Typography>
             </div>
             <div className={classes.overlay2}>
-                <Button style={{ color: 'white' }} size='small' onClick={() => { }}>
+                <Button style={{ color: 'white' }} size='small' onClick={()=>dispatchUpdatePostAction(props.post)}>
                     <MoreHorizIcon fontSize='default' />
                 </Button>
             </div>

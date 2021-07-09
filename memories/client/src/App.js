@@ -15,9 +15,9 @@ const App = (props)=>{
     },[dispath])
 
     return(
-        <Container maxWidth='lg'>
+        <Container maxWidth='xl'>
             <AppBar className={classes.appBar} position='static' color='inherit'>
-                <Typography className={classes.heading} variant='h1' align='center'>Memories</Typography>
+                <Typography className={classes.heading} variant='h2' align='center'>Memories</Typography>
             </AppBar>
             <Grow in>
                 <Container>

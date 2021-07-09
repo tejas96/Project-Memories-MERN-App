@@ -6,7 +6,6 @@ import useStyles from './styles';
 const Posts = (props) =>{
     const classes = useStyles();
     const post = useSelector((state)=>state.posts);
-    console.log('tejas', post);
     return(
         <>
            {

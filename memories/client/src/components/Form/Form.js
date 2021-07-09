@@ -1,28 +1,31 @@
-import {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import useStyles from './styles';
 import {Paper, Typography, TextField, Button} from '@material-ui/core';
 import FileBase from 'react-file-base64';
-import { createPost } from '../../core/redux/actions/posts';
+import { createPost,updatePost } from '../../core/redux/actions/posts';
 
 const Form = (props) =>{
 
     const classes = useStyles();
-
     const [formData, setFormData] = useState({
         "title" : "",
         "message" : "",
         "creator" : "",
         "tags" : [],
         "selectedFile" : "",
-        "likeCount" : 0
+        "likeCount" : 0,
     })
+    const formUpdateInfo = useSelector((state)=>state.form.updatePostInfo);
 
     const dispatch = useDispatch();
 
     const handleFormSubmit = (event)=>{
         event.preventDefault();
-        dispatch(createPost(formData));
+        if(formUpdateInfo)
+            dispatch(updatePost(formUpdateInfo))
+        else
+            dispatch(createPost(formData));
     }
 
     const handleOnChange = (event) =>{
@@ -34,6 +37,12 @@ const Form = (props) =>{
             [property]:value,
         });
     }
+
+    useEffect(()=>{
+        if(formUpdateInfo)
+            setFormData(formUpdateInfo);
+    },[formUpdateInfo]);
+
     return(
        <Paper className={classes.paper} elevation={3} variant='outlined'>
            <form className={`${classes.form} ${classes.root}`} autoComplete='off' noValidate onSubmit={handleFormSubmit}>

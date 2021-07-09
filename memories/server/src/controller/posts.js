@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const PostMessage = require('../models/postsMessage');
 
 module.exports = {
@@ -18,5 +20,18 @@ module.exports = {
         }catch(error){
             res.status(500).json({message : error.message});
         }
+    },
+
+    updatePost : async (req, res) => {
+        const post = req.body;
+        let id = post._id;
+        delete post._id;
+            try{
+        const updatedPost = await PostMessage.updateOne({_id:id},post);
+       return Response.status(200).json(updatedPost);
+            }catch(error){
+                console.log(error);
+            }
+    
     }
 }
